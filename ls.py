@@ -5,6 +5,7 @@ import seafileapi
 import time
 import sys
 
+keep_days = 7
 if len(sys.argv) > 1:
   keep_days = int(sys.argv[1])
   print('Day to keep: %s' % keep_days)
