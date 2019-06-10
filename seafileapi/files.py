@@ -13,7 +13,7 @@ class _SeafDirentBase(object):
     """
     isdir = None
 
-    def __init__(self, repo, path, object_id, size=0):
+    def __init__(self, repo, path, object_id, size=0, mtime=0):
         """
         :param:`path` the full path of this entry within its repo, like
         "/documents/example.md"
@@ -25,6 +25,7 @@ class _SeafDirentBase(object):
         self.path = path
         self.id = object_id
         self.size = size
+        self.mtime = mtime
 
     @property
     def name(self):
@@ -211,9 +212,9 @@ class SeafDir(_SeafDirentBase):
         dirent_json = utf8lize(dirent_json)
         path = posixpath.join(self.path, dirent_json['name'])
         if dirent_json['type'] == 'file':
-            return SeafFile(self.repo, path, dirent_json['id'], dirent_json['size'])
+            return SeafFile(self.repo, path, dirent_json['id'], dirent_json['size'], dirent_json['mtime'])
         else:
-            return SeafDir(self.repo, path, dirent_json['id'], 0)
+            return SeafDir(self.repo, path, dirent_json['id'], 0, dirent_json['mtime'])
 
     @property
     def num_entries(self):
